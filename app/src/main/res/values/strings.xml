@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">ChatGPT</string>
+    <string name="ask_chatgpt_anything">Ask ChatGPT anything...</string>
+    <string name="ask_chatgpt">Ask ChatGPT</string>
+    <string name="test_button">Postman Echo Test</string>
+    <string name="the_chatgpt_response_will_appear_here">The ChatGPT response will appear here!</string>
+</resources>
