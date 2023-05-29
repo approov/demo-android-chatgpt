@@ -19,11 +19,12 @@ import okhttp3.Response
 import org.json.JSONArray
 import org.json.JSONObject
 import java.io.IOException
+import java.util.concurrent.TimeUnit
 
 class MainActivity : AppCompatActivity() {
     private lateinit var submitButton: Button
     private lateinit var testButton: Button
-    private val client = OkHttpClient()
+    private val client = OkHttpClient().newBuilder().readTimeout(60, TimeUnit.SECONDS).build()
     private lateinit var progressBar: ProgressBar
 
     override fun onCreate(savedInstanceState: Bundle?) {
