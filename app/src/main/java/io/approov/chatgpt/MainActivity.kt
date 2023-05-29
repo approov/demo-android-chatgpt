@@ -1,5 +1,6 @@
 package io.approov.chatgpt
 
+import android.app.Activity
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -8,6 +9,8 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.ProgressBar
 import android.widget.TextView
+import androidx.core.view.WindowCompat
+import androidx.core.view.WindowInsetsCompat
 import okhttp3.Call
 import okhttp3.Callback
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
@@ -135,6 +138,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun startProgress() {
         runOnUiThread {
+            hideKeyboard()
             submitButton.isEnabled = false
             testButton.isEnabled = false
             progressBar.visibility = View.VISIBLE
@@ -148,6 +152,13 @@ class MainActivity : AppCompatActivity() {
             progressBar.visibility = View.INVISIBLE
         }
     }
+
+    private fun Activity.hideKeyboard() {
+        getInsetController().hide((WindowInsetsCompat.Type.ime()))
+    }
+
+    private fun Activity.getInsetController() = WindowCompat.getInsetsController(window, window.decorView)
+
     companion object {
         private const val apiKey = "Bearer YOUR_CHATGPT_API_KEY"
         private const val apiUrl = "https://api.openai.com/v1/chat/completions"
