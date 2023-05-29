@@ -86,6 +86,7 @@ class MainActivity : AppCompatActivity() {
             override fun onFailure(call: Call, e: IOException) {
                 Log.e("CHATGPT_APP","OpenAI API error response", e)
                 Log.e("CHATGPT_APP", e.toString())
+                stopProgress()
                 callback(e.toString())
             }
 
