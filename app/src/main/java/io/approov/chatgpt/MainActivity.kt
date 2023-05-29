@@ -107,7 +107,8 @@ class MainActivity : AppCompatActivity() {
                     response = jsonBody.getString("error")
                 } else if (jsonBody.has("choices")) {
                     val jsonArray: JSONArray = jsonBody.getJSONArray("choices")
-                    response = jsonArray.getJSONObject(0).getString("text")
+                    response = jsonArray.getJSONObject(0).getJSONObject("message").getString("content")
+                    Log.d("CHATGPT_APP", response)
                 } else if (jsonBody.has("data")) {
                     response = jsonBody.getString("data")
                 } else {
@@ -121,11 +122,13 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun buildRequestBody(prompt: String): RequestBody {
+        // @link https://platform.openai.com/docs/api-reference/chat
         return """
             {
-            "prompt": "$prompt",
-            "max_tokens": 1000,
-            "temperature": 5
+                "model": "gpt-3.5-turbo",
+                "n": 1,
+                "temperature": 0,
+                "messages": [{"role": "user", "content": "$prompt"}]
             }
             """.trimIndent().toRequestBody("application/json".toMediaTypeOrNull())
     }
@@ -147,7 +150,7 @@ class MainActivity : AppCompatActivity() {
     }
     companion object {
         private const val apiKey = "Bearer YOUR_CHATGPT_API_KEY"
-        private const val apiUrl = "https://api.openai.com/v1/engines/text-davinci-003/completions"
+        private const val apiUrl = "https://api.openai.com/v1/chat/completions"
         private const val apiUrlTest = "https://postman-echo.com/post"
     }
 }
